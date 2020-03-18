@@ -4,13 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Type Up</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
-    <header>
-        <h1>Type Up !</h1>
+    <header id="homePage">
+        <div class="homePage wrapper">
+            <h1>Type Up !</h1>
+            <h2 class="typed"></h2>
+            <a href="" class="startButton">Start!</a>
+        </div>
     </header>
-    <main>
-
+    <main >
+        <div class="wrapper gamePage" id="gamePage">
+            <p class="sampleText"></p>
+            <form action="">
+                <textarea col="1" row="5" placeholder="Type here"></textarea>
+                <input type="submit" value="Submit!" class="submitButton">
+            </form>
+        </div>
     </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.1/typed.min.js"></script>
+    <script src="./script.js"></script>
 </body>
 </html>
