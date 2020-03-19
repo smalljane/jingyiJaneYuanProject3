@@ -2,9 +2,12 @@ const typeUp={};
 const textLibrary = [
     "I like cheese", "happiness=function(){healthy:true}", 'I can type fast', 'Irregardless','try write code without autocomplete','Visual Studio Code','cohort26'
 ]
-
-const textDisplay = $(".sampleText")
-
+// global variables
+const textDisplay = $(".sampleText");
+typeUp.seconds = 0;
+typeUp.minutes = 0;
+typeUp.interval;
+typeUp.time = $("#time");
 // generate a random text from the sample Text library
 typeUp.sampleText = function(){
     const i = Math.floor (Math.random()* textLibrary.length);
@@ -24,24 +27,42 @@ typeUp.typedAnimation = function(){
     loopCount:2
 });
 }
+
+// timer
+typeUp.timer = function () {
+    typeUp.interval = setInterval(function(){
+        typeUp.seconds++;
+        typeUp.time.html(`${typeUp.minutes}m ${typeUp.seconds}s`);
+        if (typeUp.seconds == 60) {
+            typeUp.minutes++;
+            typeUp.seconds = 0;
+        } else if (typeUp.minutes == 30) {
+            swal({
+                title: "30 minutes? Really?🙄",
+                button: "Play again !"
+            }).then(typeUp.reStart())
+        }
+    },1000)
+
+}
 // function of button click to scroll page to next section
 typeUp.scrollPage = function(){
     $('.startButton').on('click',function(e){
         e.preventDefault();
+        typeUp.timer();
         $('html').animate({
             scrollTop: $('#gamePage').offset().top
-        },1000,'swing',function(){
+        },800,'swing',function(){
             typeUp.sampleText();
         });
     });
 }
 
-// timer
-
 // compare user input with sample text
 typeUp.result = function(){
     $('.submitButton').on('click',function(e){
         e.preventDefault();
+        clearInterval(typeUp.interval);
         const userInput = $('textarea').val()
         if (userInput === textDisplay.html()){
             typeUp.resultWindow('correct');
@@ -55,10 +76,11 @@ typeUp.result = function(){
 typeUp.reStart = function () {
     $('.swal-button').on('click',function(e){
         e.preventDefault();
-
+        typeUp.minutes = 0;
+        typeUp.seconds = 0;
         $('html').animate({
             scrollTop: $('#homePage').offset().top
-        }, 1000, function () {
+        }, 800, function () {
             $('textarea').val('');
         })
     })
@@ -84,7 +106,6 @@ typeUp.init=function(){
     typeUp.typedAnimation();
     typeUp.scrollPage();
     typeUp.result();
-
 }
 // document ready
 $(function(){
