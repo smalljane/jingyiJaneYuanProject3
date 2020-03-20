@@ -2,7 +2,10 @@ const typeUp={};
 const textLibrary = [
     "I like cheese", "happiness=function(){healthy:true}", 'I can type fast', 'Irregardless','try write code without autocomplete','Visual Studio Code','cohort26'
 ]
+const textLiraryTwo = []
+const textLiraryThree = []
 // global variables
+let wordIndex = 0
 const textDisplay = $(".sampleText");
 typeUp.seconds = 0;
 typeUp.minutes = 0;
@@ -10,8 +13,16 @@ typeUp.interval;
 typeUp.time = $("#time");
 // generate a random text from the sample Text library
 typeUp.sampleText = function(){
-    const i = Math.floor (Math.random()* textLibrary.length);
-    textDisplay.html(`${textLibrary[i]}`);
+    // const i = Math.floor (Math.random()* textLibrary.length);
+    textDisplay.html(`${textLibrary[wordIndex]}`);
+    if  (wordIndex < textLibrary.length - 1){
+        wordIndex++;
+        console.log("hi")
+    }else if(wordIndex = textLibrary.length){
+        typeUp.resultWindow("correct");
+        clearInterval(typeUp.interval);
+        console.log("hello")
+    }
     return textDisplay.html
 }
 
@@ -45,7 +56,7 @@ typeUp.timer = function () {
     },1000)
 
 }
-// function of button click to scroll page to next section
+// function of button click to scroll page to game section
 typeUp.scrollPage = function(){
     $('.startButton').on('click',function(e){
         e.preventDefault();
@@ -62,11 +73,12 @@ typeUp.scrollPage = function(){
 typeUp.result = function(){
     $('.submitButton').on('click',function(e){
         e.preventDefault();
-        clearInterval(typeUp.interval);
         const userInput = $('textarea').val()
         if (userInput === textDisplay.html()){
-            typeUp.resultWindow('correct');
+            typeUp.sampleText();
+            $('textarea').val('');
         }else{
+            clearInterval(typeUp.interval);
             typeUp.resultWindow('wrong');
         }
     })
