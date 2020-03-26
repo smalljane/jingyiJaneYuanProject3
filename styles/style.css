@@ -338,6 +338,7 @@ a:hover {
 }
 
 main {
+  height: 90vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -353,8 +354,13 @@ main {
           justify-content: center;
 }
 
-.gamePage {
-  height: 80vh;
+main .exit {
+  padding-left: 80%;
+  font-size: 3rem;
+}
+
+main .exit:hover {
+  color: #ee1c25;
 }
 
 .gamePage .sampleText {
@@ -388,7 +394,16 @@ main {
   margin-bottom: 5rem;
 }
 
-.gamePage .submitButton {
+.gamePage .gameButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.gamePage .submitButton, .gamePage .clearButton {
   background-color: black;
   border: none;
   color: #ee1c25;
@@ -398,7 +413,8 @@ main {
   padding: 0 3rem;
 }
 
-.gamePage .submitButton:hover {
+.gamePage .submitButton:hover,
+.gamePage .clearButton:hover {
   border-bottom: 6px solid #ffffff;
 }
 

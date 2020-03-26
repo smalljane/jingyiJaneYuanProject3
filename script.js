@@ -2,8 +2,7 @@ const typeUp={};
 const textLibrary = [
     "I like cheese", "happiness=function(){healthy:true}", 'I can type fast', 'Irregardless','try write code without autocomplete','Visual Studio Code','cohort26'
 ]
-const textLiraryTwo = []
-const textLiraryThree = []
+
 // global variables
 let wordIndex = 0
 const textDisplay = $(".sampleText");
@@ -17,11 +16,9 @@ typeUp.sampleText = function(){
     textDisplay.html(`${textLibrary[wordIndex]}`);
     if  (wordIndex < textLibrary.length - 1){
         wordIndex++;
-        console.log("hi")
-    }else if(wordIndex = textLibrary.length){
+    }else if(wordIndex > textLibrary.length){
         typeUp.resultWindow("correct");
         clearInterval(typeUp.interval);
-        console.log("hello")
     }
     return textDisplay.html
 }
@@ -44,10 +41,10 @@ typeUp.timer = function () {
     typeUp.interval = setInterval(function(){
         typeUp.seconds++;
         typeUp.time.html(`${typeUp.minutes}m ${typeUp.seconds}s`);
-        if (typeUp.seconds == 60) {
+        if (typeUp.seconds === 60) {
             typeUp.minutes++;
             typeUp.seconds = 0;
-        } else if (typeUp.minutes == 30) {
+        } else if (typeUp.minutes === 30) {
             swal({
                 title: "30 minutes? Really?🙄",
                 button: "Play again !"
@@ -56,16 +53,20 @@ typeUp.timer = function () {
     },1000)
 
 }
-// function of button click to scroll page to game section
+// function of button click to let user choose difficulty level
 typeUp.scrollPage = function(){
     $('.startButton').on('click',function(e){
         e.preventDefault();
-        typeUp.timer();
-        $('html').animate({
-            scrollTop: $('#gamePage').offset().top
-        },800,'swing',function(){
-            typeUp.sampleText();
-        });
+        typeUp.startGame()
+    })
+}
+// after reading rules, scroll page to game section
+typeUp.startGame = function(){
+    typeUp.timer();
+    $('html').animate({
+        scrollTop: $('#gamePage').offset().top
+    }, 800, 'swing', function () {
+        typeUp.sampleText();
     });
 }
 
@@ -83,10 +84,16 @@ typeUp.result = function(){
         }
     })
 }
-
+// clearbutton for clear userinput
+typeUp.clearInput= function(){
+    $('.clearButton').on('click',function(e){
+        e.preventDefault();
+        $('textarea').val('');
+    })
+}
 // page reload
 typeUp.reStart = function () {
-    $('.swal-button').on('click',function(e){
+    $('.swal-button--confirm').on('click',function(e){
         e.preventDefault();
         typeUp.minutes = 0;
         typeUp.seconds = 0;
@@ -94,6 +101,7 @@ typeUp.reStart = function () {
             scrollTop: $('#homePage').offset().top
         }, 800, function () {
             $('textarea').val('');
+            location.reload();
         })
     })
 } 
@@ -102,22 +110,37 @@ typeUp.reStart = function () {
 typeUp.resultWindow = function(result){
     if (result === "correct" ){
         swal({
-        title: "Good job!🎉",
-        button: "Play again !"
-     }).then(typeUp.reStart())
+            title: "Good job!🎉",
+            text: `Time used: ${typeUp.minutes}m ${typeUp.seconds}s`,
+            button: "Play again !"
+        }).then(typeUp.reStart())
     }else if (result === "wrong"){
         swal({
             title: "You lost...😬",
+            text: `Time used: ${typeUp.minutes}m ${typeUp.seconds}s`,
             button: "Play Again !"
         }).then(typeUp.reStart())
     }
 }
-
+// exit game
+typeUp.exitGame = function(){
+    $('.exit').on('click', function(){
+        const exit = swal({
+            title: "Are you sure you want to exit the game?",
+            buttons:true
+        });
+        if (exit){
+            typeUp.reStart()
+        };
+    })
+}
 // init function
 typeUp.init=function(){
     typeUp.typedAnimation();
     typeUp.scrollPage();
+    typeUp.clearInput();
     typeUp.result();
+    typeUp.exitGame();
 }
 // document ready
 $(function(){
