@@ -1,18 +1,20 @@
 const typeUp={};
 const textLibrary = [
-    "I like cheese", "happiness=function(){healthy:true}", 'I can type fast', 'Irregardless','try write code without autocomplete','Visual Studio Code','cohort26'
+    "I like cheese", "ice cream", 'bread', 'fried rice','pancake','beef burger','cohort26','pizza','pumpkin pie','chicken pot pie','banana','cheetos', 'tacos','burritos','steak','ribs','hot dog','bacon','mashed potatoes','stuffing','cookies','icecream cake','chicken teriyaki','lasagna','ravioli','pudding','nachos','meatballs','onion rings','french toast'
 ]
 
+
 // global variables
-let wordIndex = 0
+let wordIndex = 0;
 const textDisplay = $(".sampleText");
 typeUp.seconds = 0;
 typeUp.minutes = 0;
 typeUp.interval;
 typeUp.time = $("#time");
-// generate a random text from the sample Text library
+// randomize/shuffle the items in textLibrary array
+
+
 typeUp.sampleText = function(){
-    // const i = Math.floor (Math.random()* textLibrary.length);
     textDisplay.html(`${textLibrary[wordIndex]}`);
     if  (wordIndex < textLibrary.length - 1){
         wordIndex++;
@@ -72,17 +74,19 @@ typeUp.startGame = function(){
 
 // compare user input with sample text
 typeUp.result = function(){
-    $('.submitButton').on('click',function(e){
-        e.preventDefault();
-        const userInput = $('textarea').val()
-        if (userInput === textDisplay.html()){
-            typeUp.sampleText();
-            $('textarea').val('');
-        }else{
-            clearInterval(typeUp.interval);
-            typeUp.resultWindow('wrong');
+    $('textarea').keypress(function(e){
+        // e.preventDefault();
+        if (e.which === 13){
+            const userInput = $('textarea').val()
+            if (userInput === textDisplay.html()){
+                $('textarea').val('');
+                typeUp.sampleText();
+            }else{
+                clearInterval(typeUp.interval);
+                typeUp.resultWindow('wrong');
+            }
         }
-    })
+     })
 }
 // clearbutton for clear userinput
 typeUp.clearInput= function(){
@@ -108,17 +112,23 @@ typeUp.reStart = function () {
 
 // results pop up window
 typeUp.resultWindow = function(result){
-    if (result === "correct" ){
+    if (result === "correct" && typeUp.minues <= 1){
+        swal({
+            title: "Wow,that's fast!!Great Job!!🎉",
+            text: `🕘 used: ${typeUp.minutes}m ${typeUp.seconds}s`,
+            button: "Play again ⌨️"
+        }).then(typeUp.reStart())
+    }else if (result === "correct" && typeUp.minutes <= 2 ){
         swal({
             title: "Good job!🎉",
-            text: `Time used: ${typeUp.minutes}m ${typeUp.seconds}s`,
-            button: "Play again !"
+            text: `🕘 used: ${typeUp.minutes}m ${typeUp.seconds}s`,
+            button: "Play again ⌨️"
         }).then(typeUp.reStart())
     }else if (result === "wrong"){
         swal({
             title: "You lost...😬",
-            text: `Time used: ${typeUp.minutes}m ${typeUp.seconds}s`,
-            button: "Play Again !"
+            text: `🕘 used: ${typeUp.minutes}m ${typeUp.seconds}s`,
+            button: "Play Again ⌨️"
         }).then(typeUp.reStart())
     }
 }

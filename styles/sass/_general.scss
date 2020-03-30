@@ -9,9 +9,9 @@ html{
 }
 
 body{
-    background-color: black;
-    color:#cccccc;
-    font-family: 'Oswald', sans-serif;
+    background-color:$backgroundColor;
+    color:$secondTextColor;
+    font-family: $mainFont;
 }
 
 a{
