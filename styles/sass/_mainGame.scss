@@ -5,7 +5,7 @@ main{
     align-items: center;
     justify-content: center;
     .exit{
-        padding-left:80%;
+        margin-left: 80%;
         font-size: 3rem;
     }
     .exit:hover{
@@ -35,15 +35,25 @@ main{
         color:$mainTextColor;
         font-size: 3rem;
         font-family: $mainFont;
-        margin-bottom: 5rem;
+        margin-bottom: 3rem;
         box-shadow: 0 4px 8px 0 rgba(248, 245, 245, 0.452), 0 6px 20px 0 rgba(233, 228, 228, 0.61);
+    }
+    // rules 
+    p{
+        font-size:2rem;
+        font-family: $mainFont;
+        line-height: 0.1rem;
     }
     .gameButtons{
         display: flex;
         justify-content: center;
+        margin-top:1rem;
+    }
+    .nextButton{
+        display:none;
     }
     // clear button 
-    .clearButton{
+    .clearButton, .nextButton{
         background-color:$backgroundColor;
         border:none;
         color:$buttonTextColor;
@@ -52,7 +62,7 @@ main{
         font-family: $mainFont;
         margin:0 3rem;
     }
-    
+    .nextButton:hover,
     .clearButton:hover{
         border-bottom: 6px solid $mainTextColor ;
     }
@@ -79,6 +89,16 @@ main{
 .swal-modal {
     border: 5px solid $buttonTextColor;
 }
+@media (max-width:1000px){
+    .gamePage .nextButton{
+        display:inline;
+    }
+}
+@media(max-width:700px){
+    .gamePage form p:last-of-type{
+        display:none;
+    } 
+}
 
 @media (max-width:550px){
     main{
@@ -93,16 +113,15 @@ main{
         }
         textarea{
             padding:3rem 2rem;
-            margin-bottom:3rem;
+            margin-bottom:2rem;
             width:80%;
         }
-
-        .clearButton{
+        .clearButton,
+        .nextButton{
             font-size:4rem;
             margin:0 2rem;
         }
     }
-
     .timer p{
         font-size:2rem;
     }
@@ -122,10 +141,14 @@ main{
         }
         textarea{
             padding:2rem 1rem;
-            margin-bottom:2rem;
+            margin-bottom:1rem;
+        }
+        p{
+            font-size:1.5rem;
         }
 
-        .clearButton{
+        .clearButton,
+        .nextButton{
             font-size:3rem;
             margin:0 1.5rem;
         }

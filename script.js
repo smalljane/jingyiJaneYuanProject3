@@ -1,25 +1,26 @@
 const typeUp={};
 const textLibrary = [
-    "I like cheese", "ice cream", 'bread', 'fried rice','pancake','beef burger','cohort26','pizza','pumpkin pie','chicken pot pie','banana','cheetos', 'tacos','burritos','steak','ribs','hot dog','bacon','mashed potatoes','stuffing','cookies','icecream cake','chicken teriyaki','lasagna','ravioli','pudding','nachos','meatballs','onion rings','french toast'
+    'I like cheese', 'ice cream', 'bread', 'fried rice', 'pancake', 'beef burger', 'cohort26', 'pizza', 'pumpkin pie', 'chicken pot pie', 'banana', 'cheetos', 'tacos', 'burritos', 'steak', 'ribs', 'hot dog', 'bacon', 'mashed potatoes', 'stuffing', 'cookies', 'icecream cake', 'chicken teriyaki', 'lasagna', 'ravioli', 'pudding', 'nachos', 'meatballs', 'onion rings','french toast'
 ]
+
 
 
 // global variables
 let wordIndex = 0;
-const textDisplay = $(".sampleText");
+const textDisplay = $('.sampleText');
 typeUp.seconds = 0;
 typeUp.minutes = 0;
 typeUp.interval;
-typeUp.time = $("#time");
-// randomize/shuffle the items in textLibrary array
+typeUp.time = $('#time');
 
 
+// display each sample text in the array 
 typeUp.sampleText = function(){
     textDisplay.html(`${textLibrary[wordIndex]}`);
     if  (wordIndex < textLibrary.length - 1){
         wordIndex++;
-    }else if(wordIndex > textLibrary.length){
-        typeUp.resultWindow("correct");
+    }else if(wordIndex === textLibrary.length -1){
+        typeUp.resultWindow('correct');
         clearInterval(typeUp.interval);
     }
     return textDisplay.html
@@ -27,7 +28,7 @@ typeUp.sampleText = function(){
 
 // using typed js library to create typing effects.
 typeUp.typedAnimation = function(){
-    $(".typed").typed({
+    $('.typed').typed({
     strings: ['How fast can you type?'],
     smartBackspace: true,
     typeSpeed: 30,
@@ -48,8 +49,8 @@ typeUp.timer = function () {
             typeUp.seconds = 0;
         } else if (typeUp.minutes === 30) {
             swal({
-                title: "30 minutes? Really?🙄",
-                button: "Play again !"
+                title: '30 minutes? Really?🙄',
+                button: 'Play again !'
             }).then(typeUp.reStart())
         }
     },1000)
@@ -62,7 +63,7 @@ typeUp.scrollPage = function(){
         typeUp.startGame()
     })
 }
-// after reading rules, scroll page to game section
+// scroll page to game section
 typeUp.startGame = function(){
     typeUp.timer();
     $('html').animate({
@@ -75,9 +76,10 @@ typeUp.startGame = function(){
 // compare user input with sample text
 typeUp.result = function(){
     $('textarea').keypress(function(e){
-        // e.preventDefault();
         if (e.which === 13){
+            e.preventDefault();
             const userInput = $('textarea').val()
+            // compare user input to sample text, if match, then next word, if not, game over
             if (userInput === textDisplay.html()){
                 $('textarea').val('');
                 typeUp.sampleText();
@@ -87,6 +89,21 @@ typeUp.result = function(){
             }
         }
      })
+}
+// taking user input and compare with sample text in mobile
+typeUp.resultMoible = function(){
+    $('.nextButton').on('click',function(e){
+        e.preventDefault();
+        const userInput = $('textarea').val()
+        // compare user input to sample text, if match, then next word, if not, game over
+        if (userInput === textDisplay.html()) {
+            $('textarea').val('');
+            typeUp.sampleText();
+        } else {
+            clearInterval(typeUp.interval);
+            typeUp.resultWindow('wrong');
+        }
+    })
 }
 // clearbutton for clear userinput
 typeUp.clearInput= function(){
@@ -112,23 +129,23 @@ typeUp.reStart = function () {
 
 // results pop up window
 typeUp.resultWindow = function(result){
-    if (result === "correct" && typeUp.minues <= 1){
+    if (result === 'correct' && typeUp.minutes <= 1){
         swal({
-            title: "Wow,that's fast!!Great Job!!🎉",
+            title: 'Wow,that is fast! Great Job!!🎉',
             text: `🕘 used: ${typeUp.minutes}m ${typeUp.seconds}s`,
-            button: "Play again ⌨️"
+            button: 'Play again ⌨️'
         }).then(typeUp.reStart())
     }else if (result === "correct" && typeUp.minutes <= 2 ){
         swal({
-            title: "Good job!🎉",
+            title: 'Good job!🎉',
             text: `🕘 used: ${typeUp.minutes}m ${typeUp.seconds}s`,
             button: "Play again ⌨️"
         }).then(typeUp.reStart())
     }else if (result === "wrong"){
         swal({
-            title: "You lost...😬",
+            title: 'You lost...😬',
             text: `🕘 used: ${typeUp.minutes}m ${typeUp.seconds}s`,
-            button: "Play Again ⌨️"
+            button: 'Play Again ⌨️'
         }).then(typeUp.reStart())
     }
 }
@@ -136,7 +153,7 @@ typeUp.resultWindow = function(result){
 typeUp.exitGame = function(){
     $('.exit').on('click', function(){
         const exit = swal({
-            title: "Are you sure you want to exit the game?",
+            title: 'Are you sure you want to exit the game?',
             buttons:true
         });
         if (exit){
@@ -150,6 +167,7 @@ typeUp.init=function(){
     typeUp.scrollPage();
     typeUp.clearInput();
     typeUp.result();
+    typeUp.resultMoible();
     typeUp.exitGame();
 }
 // document ready

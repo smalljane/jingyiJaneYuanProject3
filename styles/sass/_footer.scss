@@ -1,12 +1,14 @@
 footer{
+    background: $mainTextColor;
     a{
         font-size: 2.5rem;
         letter-spacing: 3px;
-        color:hsl(0, 0%, 100%);
-        float:right;
+        color:black;
         padding-bottom:1rem;
+        display:flex;
+        justify-content: center;
     }
-    margin:2rem 0;
+    margin-top:2rem;
 }
 
 @media (max-width:550px){

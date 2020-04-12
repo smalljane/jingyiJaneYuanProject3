@@ -4,17 +4,34 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-h1{
-    font-size:6rem;
-    font-weight:600;
-    text-align: center;
+    h1{
+        font-size:6rem;
+        font-weight:600;
+        text-align: center;
+    }
+
+    h2{
+        font-size:4rem;
+        text-align: center;
+    }
+    // start button
+    a{
+        background-color:$backgroundColor;
+        color:$buttonTextColor;
+        font-size: 5rem;
+        text-transform: uppercase;
+        font-family:$mainFont;  
+        border: 3px solid $secondTextColor;
+        border-radius: 3px;
+        padding:1rem;
+        box-shadow: 0 4px 8px 0 rgba(248, 245, 245, 0.452), 0 6px 20px 0 rgba(233, 228, 228, 0.61);
+    }
+    a:hover{
+        border: 3px solid $buttonTextColor;
+    }
+
 }
 
-h2{
-    font-size:4rem;
-    text-align: center;
-}
 // hide defaut cursor came with typed.js
 .typed-cursor{
    opacity: 0;
@@ -46,30 +63,28 @@ h2{
     100% { opacity:1; }
 }
 
-// start button
-a{
-    background-color:$backgroundColor;
-    border:none;
-    color:$buttonTextColor;
-    font-size: 5rem;
-    text-transform: uppercase;
-    font-family:$mainFont;
-    
-    
-}
-a:hover{
-    border-bottom: 6px solid $mainTextColor ;
-}
+@media (max-width:900px){
+    .homePage  a{
+        font-size:4rem;
 
+    }
+}
 
 @media (max-width:550px){
-    h1{
-        font-size: 4.5rem;
-    }
-    h2{
-        font-size:3rem;
-    }
-    a{
-        font-size:4rem;
+    .homePage{
+        h1{
+            font-size: 5rem;
+        }
+        h2{
+            font-size:3rem;
+        }
+        a{
+            font-size:3.5rem;
+            padding:0.7rem;
+        }
+        a:focus{
+            background:green;
+            color: white;
+        }
     }
 }
